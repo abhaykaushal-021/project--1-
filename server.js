@@ -41,8 +41,9 @@ const auth = (req, res, next) => {
     next();
 };
 
-
-/* Swagger */
+/**
+ * Swagger Configuration
+ */
 const options = {
     definition: {
         openapi: '3.0.0',
@@ -70,17 +71,26 @@ const options = {
                         age: {
                             type: 'integer'
                         },
-                        address:{
-                            type:'string'
+                        address: {
+                            type: 'string'
                         }
                     }
+                }
+            },
+            //  Security Scheme for Authorization
+            securitySchemes: {
+                ApiKeyAuth: {
+                    type: 'apiKey',
+                    in: 'header',
+                    name: 'authorization',
+                    description: 'Enter your token here (secret123)'
                 }
             }
         }
     },
+    
     apis: ['./server.js']
 };
-
 const swaggerSpec = swaggerJsdoc(options);
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -190,15 +200,21 @@ app.put('/users/:id', validateUser, async (req, res) => {
  * /users/{id}:
  *   delete:
  *     summary: Delete User
+ *     description: This route is protected. You need to authorize first.
+ *     security:
+ *       - ApiKeyAuth: []     # This links the security scheme
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
+ *         description: MongoDB User ID
  *     responses:
  *       200:
- *         description: User deleted
+ *         description: User deleted successfully
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
  */
 app.delete('/users/:id', auth, async (req, res) => {
     const id = req.params.id;
