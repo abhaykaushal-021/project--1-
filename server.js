@@ -83,7 +83,7 @@ const options = {
                     type: 'apiKey',
                     in: 'header',
                     name: 'authorization',
-                    description: 'Enter your token here (secret123)'
+                    description: 'Enter your token here'
                 }
             }
         }
