@@ -76,7 +76,7 @@ router.post('/', validateUser, createUser);
  */
 router.get('/', getUsers);
 
-/**
+/**+
  * @swagger
  * /users/{id}:
  *   put:
