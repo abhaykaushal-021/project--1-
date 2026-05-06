@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./docs/swagger');
 
 const logger = require('./middlewares/logger');
+const rateLimiter = require('./middlewares/rateLimiter');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(logger);
+app.use(rateLimiter);
 
 // Routes
 app.use('/auth', authRoutes);

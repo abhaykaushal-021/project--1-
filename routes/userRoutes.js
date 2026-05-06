@@ -10,6 +10,7 @@ const {
 
 const validateUser = require('../middlewares/validateUser');
 const { jwtAuthMiddleware } = require('../jwt');
+const { sessionAuthMiddleware } = require('../middlewares/session');
 
 /**
  * @swagger
@@ -59,7 +60,7 @@ const { jwtAuthMiddleware } = require('../jwt');
  *       401:
  *         description: Unauthorized
  */
-router.post('/', jwtAuthMiddleware, validateUser, createUser);
+router.post('/', jwtAuthMiddleware, sessionAuthMiddleware, validateUser, createUser);
 
 /**
  * @swagger
@@ -81,7 +82,7 @@ router.post('/', jwtAuthMiddleware, validateUser, createUser);
  *       401:
  *         description: Unauthorized
  */
-router.get('/', jwtAuthMiddleware, getUsers);
+router.get('/', jwtAuthMiddleware, sessionAuthMiddleware, getUsers);
 
 /**
  * @swagger
@@ -112,7 +113,7 @@ router.get('/', jwtAuthMiddleware, getUsers);
  *       404:
  *         description: User not found
  */
-router.put('/:id', jwtAuthMiddleware, validateUser, updateUser);
+router.put('/:id', jwtAuthMiddleware, sessionAuthMiddleware, validateUser, updateUser);
 
 /**
  * @swagger
@@ -137,6 +138,6 @@ router.put('/:id', jwtAuthMiddleware, validateUser, updateUser);
  *       404:
  *         description: User not found
  */
-router.delete('/:id', jwtAuthMiddleware, deleteUser);
+router.delete('/:id', jwtAuthMiddleware, sessionAuthMiddleware, deleteUser);
 
 module.exports = router;

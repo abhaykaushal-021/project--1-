@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { generateToken } = require('../jwt');
+const { generateToken, jwtAuthMiddleware } = require('../jwt');
+const { saveSession, deleteSession } = require('../middlewares/session');
 const User = require('../models/userModels');
 
 /**
@@ -46,7 +47,8 @@ router.post('/signup', async (req, res) => {
             age: req.body.age || 0
         });
         const savedUser = await newUser.save();
-        const token = generateToken({ id: savedUser._id, name: savedUser.name });
+        const token = generateToken({ id: savedUser._id.toString(), name: savedUser.name });
+        await saveSession(savedUser._id.toString(), token);
         res.status(201).json({ user: savedUser, token });
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -54,5 +56,28 @@ router.post('/signup', async (req, res) => {
 });
 
 
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Logout and destroy session
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logged out successfully
+ *       401:
+ *         description: Unauthorized
+ */
+router.post('/logout', jwtAuthMiddleware, async (req, res) => {
+    try {
+        await deleteSession(req.user.id);
+        res.json({ message: "logged out successfully" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "internal server error" });
+    }
+});
 
 module.exports = router;
