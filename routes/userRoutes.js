@@ -9,7 +9,7 @@ const {
 } = require('../controllers/userController');
 
 const validateUser = require('../middlewares/validateUser');
-const auth = require('../middlewares/auth');
+const { jwtAuthMiddleware } = require('../jwt');
 
 /**
  * @swagger
@@ -35,7 +35,6 @@ const auth = require('../middlewares/auth');
  *         address:
  *           type: string
  *           description: User's address
- *
  */
 
 /**
@@ -44,6 +43,8 @@ const auth = require('../middlewares/auth');
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -55,8 +56,10 @@ const auth = require('../middlewares/auth');
  *         description: User created successfully
  *       400:
  *         description: Validation error
+ *       401:
+ *         description: Unauthorized
  */
-router.post('/', validateUser, createUser);
+router.post('/', jwtAuthMiddleware, validateUser, createUser);
 
 /**
  * @swagger
@@ -64,6 +67,8 @@ router.post('/', validateUser, createUser);
  *   get:
  *     summary: Get all users
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of users
@@ -73,15 +78,19 @@ router.post('/', validateUser, createUser);
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized
  */
-router.get('/', getUsers);
+router.get('/', jwtAuthMiddleware, getUsers);
 
-/**+
+/**
  * @swagger
  * /users/{id}:
  *   put:
  *     summary: Update a user
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -98,10 +107,12 @@ router.get('/', getUsers);
  *     responses:
  *       200:
  *         description: User updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: User not found
  */
-router.put('/:id', validateUser, updateUser);
+router.put('/:id', jwtAuthMiddleware, validateUser, updateUser);
 
 /**
  * @swagger
@@ -126,6 +137,6 @@ router.put('/:id', validateUser, updateUser);
  *       404:
  *         description: User not found
  */
-  router.delete('/:id', auth, deleteUser);
+router.delete('/:id', jwtAuthMiddleware, deleteUser);
 
 module.exports = router;

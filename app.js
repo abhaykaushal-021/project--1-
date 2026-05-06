@@ -6,6 +6,7 @@ const swaggerSpec = require('./docs/swagger');
 
 const logger = require('./middlewares/logger');
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(logger);
 
 // Routes
+app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
