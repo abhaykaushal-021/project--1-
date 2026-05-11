@@ -1,5 +1,6 @@
 const User = require('../models/userModels');
 
+
 exports.createUser = async (req, res, next) => {
     try {
         const newUser = new User(req.body);
@@ -7,6 +8,7 @@ exports.createUser = async (req, res, next) => {
         res.status(201).json(newUser);
     } catch (err) {
         next(err);
+       
     }
 };
 
