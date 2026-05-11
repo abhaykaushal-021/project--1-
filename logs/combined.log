@@ -1,0 +1,13 @@
+2026-05-11 15:19:10 [info]: GET /docs/
+2026-05-11 15:19:10 [info]: GET /docs/swagger-ui.css
+2026-05-11 15:19:10 [info]: GET /docs/swagger-ui-bundle.js
+2026-05-11 15:19:10 [info]: GET /docs/swagger-ui-standalone-preset.js
+2026-05-11 15:19:10 [info]: GET /docs/swagger-ui-init.js
+2026-05-11 15:19:30 [info]: POST /auth/login
+2026-05-11 15:19:47 [info]: GET /users
+2026-05-11 15:23:20 [info]: GET /docs/
+2026-05-11 15:23:21 [info]: GET /docs/swagger-ui.css
+2026-05-11 15:23:21 [info]: GET /docs/swagger-ui-bundle.js
+2026-05-11 15:23:21 [info]: GET /docs/swagger-ui-standalone-preset.js
+2026-05-11 15:23:21 [info]: GET /docs/swagger-ui-init.js
+2026-05-11 15:23:21 [info]: GET /docs/favicon-32x32.png

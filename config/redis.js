@@ -1,8 +1,7 @@
 const { createClient } = require('redis');
+const { REDIS_URL } = require('../config/config');
 
-const client = createClient({
-    url: process.env.REDIS_URL || 'redis://localhost:6379'
-});
+const client = createClient({ url: REDIS_URL });
 
 client.on('error', (err) => console.error('Redis error:', err));
 client.on('connect', () => console.log('Redis connected'));

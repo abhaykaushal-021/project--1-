@@ -15,12 +15,16 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-joi-validation": "^6.1.0",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.1",
+    "morgan": "^1.10.1",
     "redis": "^5.12.1",
-    "swagger": "^0.7.5",
+    "swagger": "^0.0.1",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

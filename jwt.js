@@ -1,15 +1,10 @@
 const jwt = require('jsonwebtoken');
-
-const SECRET = process.env.JWT_SECRET;
-
-if (!SECRET) {
-    throw new Error("JWT_SECRET is not defined in .env");
-}
+const { JWT_SECRET } = require('./config/config');
 
 const jwtAuthMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
-    console.log("jwtAuthMiddleware hit, authHeader:", authHeader);
+    console.log("jwt hit, authHeader:", authHeader);
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ error: "unauthorized" });
@@ -22,7 +17,7 @@ const jwtAuthMiddleware = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
         next();
     } catch (err) {
@@ -32,7 +27,7 @@ const jwtAuthMiddleware = (req, res, next) => {
 };
 
 const generateToken = (userData) => {
-    return jwt.sign(userData, SECRET, { expiresIn: '1d' });
+    return jwt.sign(userData, JWT_SECRET, { expiresIn: '1d' });
 };
 
 module.exports = { jwtAuthMiddleware, generateToken };

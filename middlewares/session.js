@@ -11,7 +11,6 @@ const getSession = async (userId) => {
     const key = `session:${userId}`;
     return await client.get(key);
 };
-
 const deleteSession = async (userId) => {
     const key = `session:${userId}`;
     await client.del(key);
