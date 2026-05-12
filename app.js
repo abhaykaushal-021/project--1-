@@ -10,6 +10,7 @@ const authRoutes = require('./routes/authRoutes');
 const Errorhandler = require('./middlewares/Errorhandler');
 const { loggerMiddleware } = require('./middlewares/logger');
 
+
 const app = express();
 
 // Middlewares
@@ -28,5 +29,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(Errorhandler);
+app.use("/orders", require("./routes/orderRoutes"));
 
 module.exports = app;
